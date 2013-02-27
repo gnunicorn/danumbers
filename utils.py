@@ -2,7 +2,6 @@
 from google.appengine.ext.ndb import Key
 from google.appengine.api import users
 
-from jerry.app_engine import Provider
 import config
 
 import hmac
@@ -66,10 +65,9 @@ def as_json(fun):
             }))
     return wrapped
 
-_jerry = Provider(**config.jerry)
 
-def get_jerry_profile(key):
-    return _jerry.signin(user_id=key)
+def logged_in(func):
+    return verify_user(as_json(func))
 
 
 def verified_api_request(func):
