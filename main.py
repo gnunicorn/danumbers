@@ -12,7 +12,7 @@ import webapp2
 class LoginHandler(webapp2.RequestHandler):
 
     def get(self):
-        webapp2.redirect(users.create_login_url("/"))
+        return webapp2.redirect(users.create_login_url("/"))
 
 
 class CheckLogin(webapp2.RequestHandler):
