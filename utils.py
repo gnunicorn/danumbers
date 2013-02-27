@@ -2,8 +2,6 @@
 from google.appengine.ext.ndb import Key
 from google.appengine.api import users
 
-import config
-
 import hmac
 import hashlib
 import binascii
@@ -11,7 +9,6 @@ import webapp2
 import json
 import urllib
 import os
-
 
 
 def _get_user():
