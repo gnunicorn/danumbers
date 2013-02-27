@@ -19,58 +19,20 @@
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     </head>
     <body>
-        <div class="modal hide fade" tw-modal id="editModal" ng-controller="EditModalCtrl">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3>Unlock to Edit this Profile</h3>
-          </div>
-          <div class="modal-body">
-            <div class="alert alert-error" ng-show="errored">
-              <strong>Failed!</strong> This was not the correct key.
-            </div>
-            <div class="alert alert-success" ng-show="unlocked">
-              <strong>Great!</strong> You unlocked this profile. Click to edit this Profile. 
-            </div>
-            <input type="text" placeholder="Edit Key" required="required" ng-model="key" ng-disabled="unlocked"><span ng-show="loading">Checking ...</span>
-          </div>
-          <div class="modal-footer">
-            <a href="#" class="btn close">Close</a>
-            <button type="submit" ng-hide="unlocked" ng-click="checkEditable()" ng-disabled="form.$invalid" class="btn btn-primary">Unlock</button>
-            <a ng-show="unlocked" ng-click="dismiss()" href="/#/{{profileID}}/{{key}}" class="btn btn-primary">Go to Edit</a>
-          </div>
-        </div>
-
-        <div class="modal hide fade" tw-modal id="addModal" ng-controller="AddCtrl">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3>Add your own Profile</h3>
-          </div>
-          <ng-form name="addProfile" >
-              <div class="modal-body">
-                <div ng-class="{'control-group': true, success:nameChecked, error:addProfile.profileName.$error, info:checkingProfileName}">
-                    <div class="controls">
-                        <input type="text" ng-model="profileName" name="profileName" required="required" placeHolder="Profile Name" ng-pattern="/^\w*$/" unique-profile>
-                        <span class="help-inline" ng-show="addProfile.profileName.$error.notLongEnough">too short</span>
-                        <span class="help-inline" ng-show="addProfile.profileName.$error.pattern">only Characters, no spaces</span>
-                        <span class="help-inline" ng-show="checkingProfileName">checking...</span>
-                        <span class="help-inline" ng-show="addProfile.profileName.$error.notUniqueProfile">Profile already exists</span>
-                        <span class="help-inline" ng-show="nameChecked">Alright!</span>
-                    </div>
-                </div>
-                <br />
-                <input ng-model="email" type="email" placeholder="Email to register it to" required="required">
-                
-              </div>
-              <div class="modal-footer">
-                <a href="#" class="btn close">Close</a>
-                <button type="submit" ng-click="createProfile()" ng-disabled="form.$invalid" class="btn btn-primary">Add Profile</button>
-              </div>
-            </ng-form>
-        </div>
+        
         <div class="container" ng-controller="MainCtrl">
-            <div class="span pull-right">
-                <a href="/login" ng-hide="user.id" role="button" class="btn btn-inverse"><span class="icon-plus icon-white"></span>&nbsp;Login</a>
-                <a href="/login" ng-show="user.id" role="button" data-toggle="modal" class="btn btn-inverse">{{user.nickname}}&nbsp;</a>
+            <div class="row">
+              <div class="span pull-right">
+                  <a href="/login" ng-hide="user.id" role="button" class="btn btn-inverse"><span class="icon-plus icon-white"></span>&nbsp;Login</a>
+                  <a href="/login" ng-show="user.id" role="button" data-toggle="modal" class="btn btn-inverse">{{user.nickname}}&nbsp;</a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="span" ng-show="user.id">
+                <ul class="breadcrumb">
+                  <li><a href="#/Dashboard">Dashboard</a> <span class="divider"> - </span></li>
+                </ul>
+              </div>
             </div>
             <div class="row">
                 <div ng-view>

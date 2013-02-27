@@ -104,14 +104,14 @@ angular.module('app', ["app.services"]).
        when('/dashboard', {controller:"DashboardCtrl", templateUrl:'tmpl/home.tmpl'}).
       otherwise({redirectTo:'/'});
   }).
-  controller ("ChangesCtrl", function($scope, $rootScope, appState, randomPicture) {
+  controller ("ChangesCtrl", function($scope, $rootScope) {
   }).
-  controller ("DashboardCtrl", function($scope, $rootScope, appState, randomPicture) {
+  controller ("DashboardCtrl", function($scope, $rootScope) {
   }).
-  controller ("HomeCtrl", function($scope, $rootScope, appState, randomPicture) {
+  controller ("HomeCtrl", function($scope, $rootScope) {
   }).
-  controller ("MainCtrl", function ($scope, $http, $location, appState, $rootScope, $route) {
-    appState.app_name = $scope.app_name = "daNumbers";
+  controller ("MainCtrl", function ($scope, $http, $location, $rootScope, $route) {
+    $scope.app_name = "daNumbers";
     $http.get("/api/v1/me/").success(
       function(resp) {
         var user = resp.result;
