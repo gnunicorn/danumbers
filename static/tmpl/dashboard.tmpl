@@ -1,0 +1,38 @@
+
+<div class="row">
+  <div class="span" ng-show="user.id">
+    <ul class="breadcrumb">
+      <li><a href="#/Dashboard">Dashboard</a> <span class="divider"> - </span></li>
+    </ul>
+  </div>
+</div>
+
+<div class="modal hide fade" tw-modal id="addModal">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Add another Profile</h3>
+  </div>
+  <ng-form name="addProfile" >
+      <div class="modal-body">
+            <div class="controls">
+                <input type="text" ng-model="profileName" name="profileName" required="required" placeHolder="Profile Name" unique-profile>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn close">Close</a>
+        <button type="submit" ng-click="createProfile()" n class="btn btn-primary">Add Profile</button>
+      </div>
+    </ng-form>
+</div>
+<div class="container">
+	<div class="row">
+		<h2>Please select a profile</h2>
+		<div class="span pull-right">
+            <a href="#addModal" role="button" data-toggle="modal" class="btn btn-primary"><span class="icon-plus icon-white"></span>&nbsp;Add Profile</a>
+		</div>
+	</div>
+	<div class="row">
+
+	</div>
+
+</div>

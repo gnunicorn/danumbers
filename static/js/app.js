@@ -1,4 +1,7 @@
-angular.module('app.services', ['ui']).
+angular.module('app.services', ['ui', 'ngResource']).
+  factory("Profile", function($resource){
+    return $resource("api/v1/profile/", {_raw:1});
+  }).
   filter("defaults", function() {
     return function(input, def) {
       return input || def;
@@ -100,13 +103,27 @@ angular.module('app', ["app.services"]).
   config(function($routeProvider) {
      $routeProvider.
        when('/', {controller:"HomeCtrl", templateUrl:'tmpl/home.tmpl'}).
+       when('/:profileId/dashboard', {controller:"ProfileDashboardCtrl",
+            templateUrl:'tmpl/home.tmpl'}).
        when('/changelog', {controller:"ChangesCtrl", templateUrl:'tmpl/changelog.tmpl'}).
-       when('/dashboard', {controller:"DashboardCtrl", templateUrl:'tmpl/home.tmpl'}).
+       when('/dashboard', {controller:"DashboardCtrl", templateUrl:'tmpl/dashboard.tmpl'}).
       otherwise({redirectTo:'/'});
   }).
-  controller ("ChangesCtrl", function($scope, $rootScope) {
+  controller ("ChangesCtrl", function($scope, $rootScope, $location) {
   }).
-  controller ("DashboardCtrl", function($scope, $rootScope) {
+
+  controller ("ProfileDashboardCtrl", function($scope, $rootScope, $location) {
+  }).
+  controller ("DashboardCtrl", function($scope, Profile) {
+    $scope.profiles = Profile.query();
+    $scope.addProfile = function() {
+      var newProfile = Profile({name: $scope.profileName});
+      $scope.profileName = "";
+      $scope.profiles.push(newProfile);
+      newProfile.$save(function() {
+        $location.path("/" + newProfile.id + "/dashboard");
+      });
+    };
   }).
   controller ("HomeCtrl", function($scope, $rootScope) {
   }).
