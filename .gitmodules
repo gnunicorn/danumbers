@@ -1,0 +1,3 @@
+[submodule "static/js/vendor/dangle"]
+	path = static/js/vendor/dangle
+	url = https://github.com/fullscale/dangle.git
