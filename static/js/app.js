@@ -1,52 +1,10 @@
 angular.module('app.services', ['ui', 'ngResource']).
   factory("Profile", function($resource){
-    return $resource("api/v1/profile/", {_raw:1});
+    return $resource("api/v1/profiles/", {_raw:1});
   }).
   filter("defaults", function() {
     return function(input, def) {
       return input || def;
-    };
-  }).
-  directive("uniqueProfile", function($http) {
-    return {
-      //restrict: 'E',
-      require: 'ngModel',
-      link: function(scope, elem, attr, ctrl) {
-        
-        scope.$watch(attr.ngModel, function(value) {
-          if (!value) {
-            return;
-          }
-          if (value.length < 5) {
-            ctrl.$setValidity('notLongEnough', false);
-            return;
-          }
-          var toId;
-
-          ctrl.$setValidity('notLongEnough', true);
-          if(toId) clearTimeout(toId);
-
-          toId = setTimeout(function(){
-            toId = false;
-            scope.checkingProfileName = true;
-            scope.nameChecked = false;
-            // call to some API that returns { isValid: true } or { isValid: false }
-            $http.get('/api/v1/profile/exists?profile_name='+ value
-              ).success(function(data) {
-                scope.checkingProfileName = false;
-                var res = false;
-                if (data.result) {
-                  res = true;
-                }
-                ctrl.$setValidity('notUniqueProfile', !res);
-                if (!res) scope.nameChecked = "checked";
-                if(!scope.$$phase) {
-                  scope.$digest();
-                }
-            });
-          }, 200);
-        });
-      }
     };
   }).
   directive('twModal', function() {
@@ -114,11 +72,10 @@ angular.module('app', ["app.services"]).
 
   controller ("ProfileDashboardCtrl", function($scope, $rootScope, $location) {
   }).
-  controller ("DashboardCtrl", function($scope, Profile) {
+  controller ("DashboardCtrl", function($scope, Profile, $location) {
     $scope.profiles = Profile.query();
-    $scope.addProfile = function() {
-      var newProfile = Profile({name: $scope.profileName});
-      $scope.profileName = "";
+    $scope.createProfile = function(profileName) {
+      var newProfile = new Profile({name: profileName});
       $scope.profiles.push(newProfile);
       newProfile.$save(function() {
         $location.path("/" + newProfile.id + "/dashboard");

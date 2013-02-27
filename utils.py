@@ -63,12 +63,8 @@ def as_json(fun):
     return wrapped
 
 
-def logged_in(func):
-    return verify_user(as_json(func))
-
-
 def verified_api_request(func):
     # def wrapped(handler, *args, **kwargs):
     #     handler.user = _get_user()
     #     return func(handler, *args, **kwargs)
-    return as_json(func)
+    return verify_user(as_json(func))
